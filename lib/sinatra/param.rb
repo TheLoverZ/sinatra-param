@@ -29,10 +29,9 @@ module Sinatra
 
         error = "Invalid Parameter: #{name}"
         if content_type and content_type.match(mime_type(:json))
-          error = {message: error, errors: {name => exception.message}}.to_json
+          error = {status: options[:status_code], errors: {name => exception.message}}.to_json
         end
-
-        halt 400, error
+        halt options[:halt_code], error
       end
     end
 
